@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1"/>
+		<meta name="x5-orientation" content="portrait">
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<meta name="keywords" content="出借,贷款,赚钱,p2p,记账,网贷,金融,回报,钱包,信用卡,借钱,借贷,借款,陆金所宜信平安财富宝,爱钱进妙资甜橙荷包宜人拍贷,金服支付余额宝,京东白条挖财铜掌柜麻袋,铜板街洋钱罐向上钱庄小花玖富" />
+		<meta name="description" content="普惠理财是一家信息完全透明、资金高度安全、专注于为出借人提供以中小微企业应收账款为核心资产的投融资p2p线上理财服务" />
+		<title>普惠理财-安全透明专业的互联网出借理财服务</title>
+		
+		<link rel="stylesheet" href="${ctxPath}/resources/weixin2.0/css/reset.css" />
+		<link rel="stylesheet" href="${ctxPath}/resources/weixin2.0/css/capital.css" />
+	</head>
+	<body>
+		<% include("yeepayForm.html"){} %>
+		<div class="capital-wrap">
+			<header class="waphead">
+				<ul class="wap-uls">
+					<li  id="close"><img src="${ctxPath}/resources/weixin2.0/img/parlars.png" /></li>
+					<li>开通银行存管账户</li>
+				</ul>
+		</header> 
+			<div class="cpaital-alert">
+				<p class="xwlogo"></p>
+				<a href="https://www.puhuilicai.com/newnetbank.htm" class="wxdepository">了解银行存管</a>
+				<h3 style="cursor: pointer;" id="toCenter">稍后激活账号</h3>
+				<h2 style="cursor: pointer;" id="active">立即激活</h2>
+			</div>
+		
+		</div>
+		<script type="text/javascript" src="${ctxPath}/resources/js/rem.js" ></script>
+		<script type="text/javascript" src="${request.contextPath}/resources/js/jquery.min.js"></script>
+		<script type="text/javascript" src="${ctxPath}/resources/js/common.js"></script>
+		<script type="text/javascript">
+		var preUrl = '${preUrl!}';
+			$("#active").click(function(){
+				toCgtActivePlatUser()
+			});
+			$("#toCenter").click(function(){
+				window.location.href="account/toWeixinCenter.htm";
+			});
+			$("#close").click(function(){
+				window.location.href="account/toWeixinCenter.htm";
+			});
+			function toCgtActivePlatUser(){
+				$.ajax({
+					type : "POST",
+					url : "../toActivePlatuser.htm?appModel=weixin",
+					dataType : "json",
+					async : false,
+					success : function(data) {
+						if(data.activeStatus==1){
+							layer.msg("您的账户已经激活!");
+							window.location.href=preUrl;
+						}else{
+							$("#serviceName").val(data.serviceName);
+							$("#service").val(data.serviceName);
+							$("#platformNo").val(data.platformNo);
+							$("#reqData").val(data.reqData);
+							$("#keySerial").val(data.keySerial);
+							$("#requestNo").val(data.requestNo);
+							$("#sign").val(data.sign);
+							document.yeepay.action = data.action;
+							document.yeepay.submit();
+						}
+					}
+				});
+			}
+		</script>
+		<script type="text/javascript" src="${ctxPath}/resources/js/searchsg.js"></script>
+	<!--[if lte IE 9]>
+     <link rel="stylesheet" type="text/css" href="${ctxPath}/resources/ie-blocker/reset.css"/>
+    <link rel="stylesheet" href="${ctxPath}/resources/ie-blocker/speed-mode.css">
+    <script src="${ctxPath}/resources/ie-blocker/ie-blocker.ens.js"></script>
+    <![endif]-->
+	</body>
+</html>
